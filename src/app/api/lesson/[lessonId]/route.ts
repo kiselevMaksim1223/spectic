@@ -1,28 +1,50 @@
-import prisma from '@/lib/db'
+import { NextResponse } from 'next/server'
+
 import { delay } from '@/utils/delay'
 
-type AssignmentData = {
-	taskId: string
-	task: string
-	userAttempts: number
-}
+import prisma from '@/lib/db'
 
 export async function GET(
 	request: Request,
 	{ params }: { params: { lessonId: string } }
 ) {
 	const { lessonId } = params
-	const lesson = await prisma.lesson.findUnique({
-		where: {
-			taskId: lessonId,
-		},
-	})
 
-	await delay(2000)
+	try {
+		const lesson = await prisma.lesson.findUnique({
+			where: {
+				taskId: lessonId,
+			},
+		})
+		const lessonsCount = (await prisma.lesson.findMany()).length
 
-	if (!lesson) {
-		return Response.json('Not found', { status: 404 })
+		const lessonWithCount = { ...lesson, count: lessonsCount }
+		console.log(lessonWithCount)
+
+		await delay(2000)
+
+		if (!lesson) {
+			return Response.json('Not found', { status: 404 })
+		}
+
+		return Response.json(lessonWithCount)
+	} catch (error) {
+		return NextResponse.json({ message: 'Error', error }, { status: 500 })
 	}
 
-	return Response.json(lesson)
+	// const lessonsCount = await prisma.lesson.count()
+
+	// const lesson = await prisma.lesson.findUnique({
+	// 	where: {
+	// 		taskId: lessonId,
+	// 	},
+	// })
+
+	// await delay(2000)
+
+	// if (!lesson) {
+	// 	return Response.json('Not found', { status: 404 })
+	// }
+
+	// return Response.json({ ...lesson })
 }

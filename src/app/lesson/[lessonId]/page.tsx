@@ -1,10 +1,15 @@
 import Lesson from '@/components/screens/lesson/Lesson'
 
-export default function LessonPage({
+import { lessonService } from '@/services/lesson.service'
+
+export default async function LessonPage({
 	params,
 }: {
 	params: { lessonId: string }
 }) {
 	const { lessonId } = params
-	return <Lesson lessonId={lessonId} />
+
+	const lesson = await lessonService.getLesson(lessonId)
+
+	return <Lesson lesson={lesson} />
 }
