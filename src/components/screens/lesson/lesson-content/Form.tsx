@@ -13,6 +13,8 @@ import { useRedirectNextPage } from './useRedirectNextPage'
 import { useSubmitLesson } from './useSubmitLesson'
 
 const Form: FC<{ lesson: ILessonResponse }> = ({ lesson }) => {
+	console.log('form rendered')
+
 	const ref = useRef<HTMLTextAreaElement>(null)
 
 	const { response, isLoading, submitLesson, isDisabled, handleChange } =

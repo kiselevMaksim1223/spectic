@@ -1,7 +1,6 @@
 'use client'
 
-import { useParams, useRouter } from 'next/navigation'
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 
 import { ILessonResponse } from '@/types/lesson.types'
 
