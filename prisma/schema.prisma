@@ -11,8 +11,8 @@ datasource db {
 }
 
 model Lesson {
-  taskId Int    @id
-  task   String
+  lessonId Int    @id
+  task     String
 }
 
 model User {

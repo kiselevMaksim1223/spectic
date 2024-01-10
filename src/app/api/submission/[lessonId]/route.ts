@@ -1,9 +1,9 @@
 import { currentUser } from '@clerk/nextjs'
 import { NextRequest, NextResponse } from 'next/server'
 
-import { ISubmissionResponseData } from '@/types/lesson.types'
-
 import { delay } from '@/utils/delay'
+
+import { ISubmissionResponseData } from '@/store/lesson/lesson.interface'
 
 import prisma from '@/lib/db'
 

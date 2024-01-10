@@ -1,32 +1,47 @@
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+import { useAppDispatch } from '@/hooks/useAppDispatch'
+
+import { setIsCompletedResult } from '@/store/lesson/lesson.slice'
+
 export const useRedirectNextPage = (
-	taskId: number,
+	lessonId: number,
 	lessonCount: number,
-	response: boolean | null
+	submissionResult: boolean | null,
+	isCompleted: boolean
 ) => {
 	const [redirectTime, setRedirectTime] = useState(5)
 	const { push } = useRouter()
+	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		const next = Number(taskId) + 1
+		const next = lessonId + 1
 
-		if (response !== null) {
+		if (typeof submissionResult === 'boolean' && !isCompleted) {
 			const timeout = setTimeout(() => {
 				if (next > lessonCount) {
 					push('/result')
 				} else push(`/lesson/${next}`)
+				dispatch(setIsCompletedResult({ lessonId, isCompleted: true }))
 			}, redirectTime * 1000)
 
 			return () => {
 				clearTimeout(timeout)
 			}
 		}
-	}, [response, push, taskId, redirectTime, lessonCount])
+	}, [
+		submissionResult,
+		push,
+		lessonId,
+		redirectTime,
+		lessonCount,
+		isCompleted,
+		dispatch,
+	])
 
 	useEffect(() => {
-		if (response !== null) {
+		if (typeof submissionResult === 'boolean' && !isCompleted) {
 			const timer = setInterval(() => {
 				setRedirectTime((prevTime) => {
 					if (prevTime <= 1) {
@@ -39,7 +54,7 @@ export const useRedirectNextPage = (
 
 			return () => clearInterval(timer)
 		}
-	}, [response])
+	}, [submissionResult, isCompleted])
 
 	return redirectTime
 }

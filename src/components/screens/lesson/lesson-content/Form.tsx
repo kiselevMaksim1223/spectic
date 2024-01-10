@@ -5,7 +5,9 @@ import { FC, FormEvent, useRef } from 'react'
 import Button from '@/components/ui/Button'
 import Loader from '@/components/ui/Loader'
 
-import { ILessonResponse } from '@/types/lesson.types'
+import { useAppSelector } from '@/hooks/useAppSelector'
+
+import { ILessonResponse } from '@/store/lesson/lesson.interface'
 
 import AnswerCheck from './AnswerCheck'
 import LessonPagination from './LessonPagination'
@@ -13,16 +15,24 @@ import { useRedirectNextPage } from './useRedirectNextPage'
 import { useSubmitLesson } from './useSubmitLesson'
 
 const Form: FC<{ lesson: ILessonResponse }> = ({ lesson }) => {
-	console.log('form rendered')
+	const res = useAppSelector((state) => state.lesson)
+	const submissionResult = res.results[lesson.lessonId]
+	const isCompleted = res.isCompletedResults[lesson.lessonId]
+
+	console.log(res)
+
+	const isLoading = useAppSelector((state) => state.lesson.isLoading)
+	const isDisabled = useAppSelector((state) => state.lesson.isDisabled)
 
 	const ref = useRef<HTMLTextAreaElement>(null)
 
-	const { response, isLoading, submitLesson, isDisabled, handleChange } =
-		useSubmitLesson(lesson.taskId)
+	const { submitLesson, handleChange } = useSubmitLesson(lesson.lessonId)
+
 	const redirectTime = useRedirectNextPage(
-		lesson.taskId,
+		lesson.lessonId,
 		lesson.count,
-		response
+		submissionResult,
+		isCompleted
 	)
 
 	const handleSubmit = async (e: FormEvent) => {
@@ -48,21 +58,28 @@ const Form: FC<{ lesson: ILessonResponse }> = ({ lesson }) => {
 				<div className="flex gap-4">
 					<Button
 						type="submit"
-						disabled={isLoading || isDisabled}
+						disabled={isLoading || isDisabled || isCompleted}
 						className="btn-submit py-3 px-10 w-auto"
 					>
 						Submit
 					</Button>
 
 					{isLoading && <Loader className="self-center !w-6 !h-6" />}
-					{response !== null && <AnswerCheck response={response} />}
+					{typeof submissionResult === 'boolean' && (
+						<AnswerCheck response={submissionResult} />
+					)}
 				</div>
-				<LessonPagination lessonCount={lesson.count} lessonId={lesson.taskId} />
+				<LessonPagination
+					lessonCount={lesson.count}
+					lessonId={lesson.lessonId}
+				/>
 			</div>
 
 			<p
 				className={`text-xs md:text-sm mt-4 self-end ${
-					response !== null ? '' : 'opacity-0'
+					typeof submissionResult === 'boolean' && !isCompleted
+						? ''
+						: 'opacity-0'
 				}`}
 			>
 				You will be redirected to the next question in {redirectTime}

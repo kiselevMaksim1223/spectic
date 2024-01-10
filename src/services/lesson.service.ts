@@ -1,4 +1,7 @@
-import { ILessonResponse, ISubmissionResponseData } from '@/types/lesson.types'
+import {
+	ILessonResponse,
+	ISubmissionResponseData,
+} from '@/store/lesson/lesson.interface'
 
 const baseUrl = 'http://localhost:3000/api'
 

@@ -11,10 +11,12 @@
   "dependencies": {
     "@clerk/nextjs": "^4.29.2",
     "@prisma/client": "^5.7.1",
+    "@reduxjs/toolkit": "^2.0.1",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^4.12.0"
+    "react-icons": "^4.12.0",
+    "react-redux": "^9.0.4"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
