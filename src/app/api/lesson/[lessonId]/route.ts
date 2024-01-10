@@ -13,7 +13,7 @@ export async function GET(
 	try {
 		const lesson = await prisma.lesson.findUnique({
 			where: {
-				taskId: lessonId,
+				taskId: Number(lessonId),
 			},
 		})
 		const lessonsCount = (await prisma.lesson.findMany()).length

@@ -1,7 +1,6 @@
 export interface IAssignmentData {
-	taskId: string
+	taskId: number
 	task: string
-	userAttempts: number
 }
 
 export interface ILessonResponse extends IAssignmentData {

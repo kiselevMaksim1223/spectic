@@ -13,6 +13,7 @@
 		"^@/types/(.*)$",
 		"^@/services/(.*)$",
 		"^@/assets/(.*)$",
+		"^@/providers/(.*)$",
 		"^@/utils/(.*)$",
 		"^@/store/(.*)$",
 		"^@/config/(.*)$",

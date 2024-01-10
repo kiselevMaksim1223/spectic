@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { lessonService } from '@/services/lesson.service'
 
-export const useSubmitLesson = (taskId: string) => {
+export const useSubmitLesson = (taskId: number) => {
 	const [response, setResponse] = useState<boolean | null>(null)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [isDisabled, setIsDisabled] = useState<boolean>(true)
