@@ -19,7 +19,6 @@ export async function GET(
 		const lessonsCount = (await prisma.lesson.findMany()).length
 
 		const lessonWithCount = { ...lesson, count: lessonsCount }
-		console.log(lessonWithCount)
 
 		await delay(2000)
 
@@ -31,20 +30,4 @@ export async function GET(
 	} catch (error) {
 		return NextResponse.json({ message: 'Error', error }, { status: 500 })
 	}
-
-	// const lessonsCount = await prisma.lesson.count()
-
-	// const lesson = await prisma.lesson.findUnique({
-	// 	where: {
-	// 		taskId: lessonId,
-	// 	},
-	// })
-
-	// await delay(2000)
-
-	// if (!lesson) {
-	// 	return Response.json('Not found', { status: 404 })
-	// }
-
-	// return Response.json({ ...lesson })
 }

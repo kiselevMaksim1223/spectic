@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import { ISubmissionResponseData } from '@/types/lesson.types'
+
 import { delay } from '@/utils/delay'
 
 import prisma from '@/lib/db'
-
-import { ISubmissionResponseData } from '@/types/lesson.types'
 
 export async function POST(
 	request: NextRequest,
@@ -25,7 +25,7 @@ export async function POST(
 				},
 			},
 		})
-		console.log(req.value)
+		console.log('request value: ', req.value)
 
 		const submissionData: ISubmissionResponseData = {
 			submissionResult: Math.random() < 0.5,
