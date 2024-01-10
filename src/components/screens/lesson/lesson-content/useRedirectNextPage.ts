@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export const useRedirectNextPage = (
-	taskId: string,
+	taskId: number,
 	lessonCount: number,
 	response: boolean | null
 ) => {

@@ -5,7 +5,7 @@ import { lessonsPagination } from '../helpers/lessonPagination'
 
 interface ILessonPagination {
 	lessonCount: number
-	lessonId: string
+	lessonId: number
 }
 
 const LessonPagination: FC<ILessonPagination> = ({ lessonCount, lessonId }) => {
@@ -15,9 +15,7 @@ const LessonPagination: FC<ILessonPagination> = ({ lessonCount, lessonId }) => {
 				<Link
 					key={id}
 					href={`/lesson/${id}`}
-					className={`text-lg ${
-						lessonId === String(id) ? 'text-blue-400' : ''
-					}`}
+					className={`text-lg ${lessonId === id ? 'text-blue-400' : ''}`}
 				>
 					{id}
 				</Link>

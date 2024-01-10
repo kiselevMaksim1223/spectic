@@ -59,7 +59,7 @@ const Form: FC<{ lesson: ILessonResponse }> = ({ lesson }) => {
 			</div>
 
 			<p
-				className={`text-sm mt-4 self-end ${
+				className={`text-xs md:text-sm mt-4 self-end ${
 					response !== null ? '' : 'opacity-0'
 				}`}
 			>

@@ -1,3 +1,4 @@
+import { currentUser } from '@clerk/nextjs'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { ISubmissionResponseData } from '@/types/lesson.types'
@@ -11,16 +12,19 @@ export async function POST(
 	{ params }: { params: { lessonId: string } }
 ) {
 	const { lessonId } = params
+	const user = await currentUser()
+
 	const req = await request.json()
 
 	try {
 		await delay(2000)
-		await prisma.lesson.update({
+		await prisma.userLessonAttempt.updateMany({
 			where: {
-				taskId: lessonId,
+				userId: user?.id!,
+				lessonId: Number(lessonId)!,
 			},
 			data: {
-				userAttempts: {
+				userAttempt: {
 					increment: 1,
 				},
 			},
