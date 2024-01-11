@@ -3,7 +3,10 @@ import {
 	ISubmissionResponseData,
 } from '@/store/lesson/lesson.interface'
 
-const baseUrl = `${window.location.origin}/api`
+const baseUrl =
+	process.env.NODE_ENV === 'production'
+		? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+		: `http://localhost:3000/api`
 
 export const lessonService = {
 	getLesson: async (
