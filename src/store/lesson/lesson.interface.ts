@@ -1,17 +1,19 @@
 export interface IInitialState {
+	lessonData: ILessonResponse | null
+	isLoading: boolean
 	results: {
 		[key: number]: boolean
 	}
 	isCompletedResults: {
 		[key: number]: boolean
 	}
-	isLoading: boolean
+	isLoadingButton: boolean
 	isDisabled: boolean
 }
 
 export interface ILessonData {
 	lessonId: string
-	token: string | null
+	token: Promise<string | null>
 }
 
 export interface ISubmitLessonData {

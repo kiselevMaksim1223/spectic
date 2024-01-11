@@ -1,10 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 import { IInitialState } from './lesson.interface'
-import { submitLessonAction } from './lesson.thunks'
+import { getLessonAction, submitLessonAction } from './lesson.thunks'
 
 const initialState: IInitialState = {
+	lessonData: null,
 	isLoading: false,
+	isLoadingButton: false,
 	isDisabled: true,
 	results: {},
 	isCompletedResults: {},
@@ -26,17 +28,28 @@ export const lessonSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(submitLessonAction.pending, (state) => {
+		builder.addCase(getLessonAction.pending, (state) => {
 			state.isLoading = true
 		})
-		builder.addCase(submitLessonAction.fulfilled, (state, { payload }) => {
+		builder.addCase(getLessonAction.fulfilled, (state, { payload }) => {
 			state.isLoading = false
+			state.lessonData = payload
+		})
+		builder.addCase(getLessonAction.rejected, (state) => {
+			state.isLoading = false
+		})
+
+		builder.addCase(submitLessonAction.pending, (state) => {
+			state.isLoadingButton = true
+		})
+		builder.addCase(submitLessonAction.fulfilled, (state, { payload }) => {
+			state.isLoadingButton = false
 			state.isDisabled = true
 			state.results[payload.lessonId] = payload.submissionResult
 			state.isCompletedResults[payload.lessonId] = false
 		})
 		builder.addCase(submitLessonAction.rejected, (state) => {
-			state.isLoading = false
+			state.isLoadingButton = false
 		})
 	},
 })

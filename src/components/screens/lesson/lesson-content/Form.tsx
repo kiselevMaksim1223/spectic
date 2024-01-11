@@ -5,12 +5,10 @@ import { FC, FormEvent, useRef } from 'react'
 import Button from '@/components/ui/Button'
 import Loader from '@/components/ui/Loader'
 
-import { useAppDispatch } from '@/hooks/useAppDispatch'
 import { useAppSelector } from '@/hooks/useAppSelector'
 
 import { ILessonResponse } from '@/store/lesson/lesson.interface'
 import { lessonResultSelector } from '@/store/lesson/lesson.selector'
-import { setIsDisabled } from '@/store/lesson/lesson.slice'
 
 import AnswerCheck from './AnswerCheck'
 import LessonPagination from './LessonPagination'
@@ -22,7 +20,7 @@ const Form: FC<{ lesson: ILessonResponse }> = ({ lesson }) => {
 
 	const submittedResult = lessonResult.results[lesson.lessonId]
 	const isCompletedResult = lessonResult.isCompletedResults[lesson.lessonId]
-	const isLoading = lessonResult.isLoading
+	const isLoadingButton = lessonResult.isLoadingButton
 	const isDisabled = lessonResult.isDisabled
 
 	const ref = useRef<HTMLTextAreaElement>(null)
@@ -59,13 +57,13 @@ const Form: FC<{ lesson: ILessonResponse }> = ({ lesson }) => {
 				<div className="flex gap-4">
 					<Button
 						type="submit"
-						disabled={isLoading || isDisabled || isCompletedResult}
+						disabled={isLoadingButton || isDisabled || isCompletedResult}
 						className="btn-submit py-3 px-10 w-auto"
 					>
 						Submit
 					</Button>
 
-					{isLoading && <Loader className="self-center !w-6 !h-6" />}
+					{isLoadingButton && <Loader className="self-center !w-6 !h-6" />}
 					{typeof submittedResult === 'boolean' && (
 						<AnswerCheck response={submittedResult} />
 					)}
