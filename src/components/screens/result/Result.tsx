@@ -6,11 +6,7 @@ import { MdHome } from 'react-icons/md'
 
 import Button from '@/components/ui/Button'
 
-import { store } from '@/store/store'
-
 const Result: FC = () => {
-	console.log(store.getState())
-
 	return (
 		<div className="flex flex-col items-center justify-center text-center w-full gap-4">
 			<p className="md:text-3xl text-base ">

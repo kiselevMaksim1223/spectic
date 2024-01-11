@@ -1,5 +1,3 @@
-'use client'
-
 import { FC } from 'react'
 
 import { ILessonResponse } from '@/store/lesson/lesson.interface'

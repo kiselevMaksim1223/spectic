@@ -8,7 +8,7 @@ import { setIsCompletedResult } from '@/store/lesson/lesson.slice'
 export const useRedirectNextPage = (
 	lessonId: number,
 	lessonCount: number,
-	submissionResult: boolean | null,
+	submittedResult: boolean | null,
 	isCompleted: boolean
 ) => {
 	const [redirectTime, setRedirectTime] = useState(5)
@@ -18,7 +18,7 @@ export const useRedirectNextPage = (
 	useEffect(() => {
 		const next = lessonId + 1
 
-		if (typeof submissionResult === 'boolean' && !isCompleted) {
+		if (typeof submittedResult === 'boolean' && !isCompleted) {
 			const timeout = setTimeout(() => {
 				if (next > lessonCount) {
 					push('/result')
@@ -31,7 +31,7 @@ export const useRedirectNextPage = (
 			}
 		}
 	}, [
-		submissionResult,
+		submittedResult,
 		push,
 		lessonId,
 		redirectTime,
@@ -41,7 +41,7 @@ export const useRedirectNextPage = (
 	])
 
 	useEffect(() => {
-		if (typeof submissionResult === 'boolean' && !isCompleted) {
+		if (typeof submittedResult === 'boolean' && !isCompleted) {
 			const timer = setInterval(() => {
 				setRedirectTime((prevTime) => {
 					if (prevTime <= 1) {
@@ -54,7 +54,7 @@ export const useRedirectNextPage = (
 
 			return () => clearInterval(timer)
 		}
-	}, [submissionResult, isCompleted])
+	}, [submittedResult, isCompleted])
 
 	return redirectTime
 }

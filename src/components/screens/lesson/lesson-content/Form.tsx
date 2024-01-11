@@ -5,9 +5,12 @@ import { FC, FormEvent, useRef } from 'react'
 import Button from '@/components/ui/Button'
 import Loader from '@/components/ui/Loader'
 
+import { useAppDispatch } from '@/hooks/useAppDispatch'
 import { useAppSelector } from '@/hooks/useAppSelector'
 
 import { ILessonResponse } from '@/store/lesson/lesson.interface'
+import { lessonResultSelector } from '@/store/lesson/lesson.selector'
+import { setIsDisabled } from '@/store/lesson/lesson.slice'
 
 import AnswerCheck from './AnswerCheck'
 import LessonPagination from './LessonPagination'
@@ -15,14 +18,12 @@ import { useRedirectNextPage } from './useRedirectNextPage'
 import { useSubmitLesson } from './useSubmitLesson'
 
 const Form: FC<{ lesson: ILessonResponse }> = ({ lesson }) => {
-	const res = useAppSelector((state) => state.lesson)
-	const submissionResult = res.results[lesson.lessonId]
-	const isCompleted = res.isCompletedResults[lesson.lessonId]
+	const lessonResult = useAppSelector(lessonResultSelector)
 
-	console.log(res)
-
-	const isLoading = useAppSelector((state) => state.lesson.isLoading)
-	const isDisabled = useAppSelector((state) => state.lesson.isDisabled)
+	const submittedResult = lessonResult.results[lesson.lessonId]
+	const isCompletedResult = lessonResult.isCompletedResults[lesson.lessonId]
+	const isLoading = lessonResult.isLoading
+	const isDisabled = lessonResult.isDisabled
 
 	const ref = useRef<HTMLTextAreaElement>(null)
 
@@ -31,14 +32,14 @@ const Form: FC<{ lesson: ILessonResponse }> = ({ lesson }) => {
 	const redirectTime = useRedirectNextPage(
 		lesson.lessonId,
 		lesson.count,
-		submissionResult,
-		isCompleted
+		submittedResult,
+		isCompletedResult
 	)
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault()
 		if (ref.current) {
-			await submitLesson(ref.current.value)
+			submitLesson(ref.current.value)
 			ref.current.value = ''
 		}
 	}
@@ -58,15 +59,15 @@ const Form: FC<{ lesson: ILessonResponse }> = ({ lesson }) => {
 				<div className="flex gap-4">
 					<Button
 						type="submit"
-						disabled={isLoading || isDisabled || isCompleted}
+						disabled={isLoading || isDisabled || isCompletedResult}
 						className="btn-submit py-3 px-10 w-auto"
 					>
 						Submit
 					</Button>
 
 					{isLoading && <Loader className="self-center !w-6 !h-6" />}
-					{typeof submissionResult === 'boolean' && (
-						<AnswerCheck response={submissionResult} />
+					{typeof submittedResult === 'boolean' && (
+						<AnswerCheck response={submittedResult} />
 					)}
 				</div>
 				<LessonPagination
@@ -77,7 +78,7 @@ const Form: FC<{ lesson: ILessonResponse }> = ({ lesson }) => {
 
 			<p
 				className={`text-xs md:text-sm mt-4 self-end ${
-					typeof submissionResult === 'boolean' && !isCompleted
+					typeof submittedResult === 'boolean' && !isCompletedResult
 						? ''
 						: 'opacity-0'
 				}`}
