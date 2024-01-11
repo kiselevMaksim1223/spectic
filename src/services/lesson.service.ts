@@ -3,7 +3,10 @@ import {
 	ISubmissionResponseData,
 } from '@/store/lesson/lesson.interface'
 
-const baseUrl = process.env.BASE_URL || 'http://localhost:3000/api'
+const baseUrl =
+	process.env.NODE_ENV === 'production'
+		? process.env.BASE_URL
+		: 'http://localhost:3000/api'
 
 export const lessonService = {
 	getLesson: async (
