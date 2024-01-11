@@ -35,7 +35,14 @@ export async function POST(
 			submissionResult: Math.random() < 0.5,
 		}
 
-		return Response.json(submissionData)
+		return Response.json(submissionData, {
+			status: 200,
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+			},
+		})
 	} catch (error) {
 		return NextResponse.json({ message: 'Error', error }, { status: 500 })
 	}
