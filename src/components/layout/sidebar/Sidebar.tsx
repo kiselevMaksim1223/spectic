@@ -1,8 +1,6 @@
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { FC } from 'react'
 
-import SidebarLinks from '@/components/ui/SidebarLinks'
+import SidebarLinks from '@/components/layout/sidebar/SidebarLinks'
 
 const Sidebar: FC = () => {
 	return (

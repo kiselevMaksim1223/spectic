@@ -5,8 +5,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { FC } from 'react'
 
-import { getLinkList } from '../layout/sidebar/helpers/getLinkList'
-import { isLinkActiveLink } from '../layout/sidebar/helpers/isLinkActiveLink'
+import { getLinkList } from './helpers/getLinkList'
+import { isLinkActiveLink } from './helpers/isLinkActiveLink'
 
 const SidebarLinks: FC = () => {
 	const path = usePathname()

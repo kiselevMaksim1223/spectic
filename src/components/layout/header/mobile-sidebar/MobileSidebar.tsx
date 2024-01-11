@@ -4,8 +4,8 @@ import { FC, useEffect, useState } from 'react'
 import { MdDensityMedium } from 'react-icons/md'
 import { MdClose } from 'react-icons/md'
 
+import SidebarLinks from '@/components/layout/sidebar/SidebarLinks'
 import Button from '@/components/ui/Button'
-import SidebarLinks from '@/components/ui/SidebarLinks'
 
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
