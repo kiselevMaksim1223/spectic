@@ -7,14 +7,45 @@ This is app is a copy of learning platforms like Stepik. As a database i use [Pr
 The Spectic provides the following features:
 
 -Display a questions with opportunity to write the answer in the text field and submit form.
+
 -Pick the question what you want to answer first.
+
+## Accomplished requirements
+
+### Requirements:
+Technologies +
+
+Programming Language +
+
+Responsive Interface +
+
+Coding Conventions + 
+
+GitHub Repository and Project Preview + 
+
+API Route Implementation + 
+
+Page Load and Interaction +
+
+Styling +
+
+### Optional Additional Features:
+Redux Architecture + 
+
+Code Input Field -
+
+Display Using a Renderer -
+
+Access Control + 
+
+Database Integration with Prisma +
+
+
 
 ## Video demonstration
 
 
 https://github.com/kiselevMaksim1223/spectic/assets/116942917/b67bddc6-863c-4514-a2a6-380c9cdf2c03
-
-
 
 
 ## Local Setup
