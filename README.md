@@ -11,7 +11,10 @@ The Spectic provides the following features:
 
 ## Video demonstration
 
-file:///home/sweetie1223/snap/obs-studio/1294/2024-01-11%2013-35-05.mkv
+
+https://github.com/kiselevMaksim1223/spectic/assets/116942917/b67bddc6-863c-4514-a2a6-380c9cdf2c03
+
+
 
 
 ## Local Setup
