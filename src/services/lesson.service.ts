@@ -3,7 +3,7 @@ import {
 	ISubmissionResponseData,
 } from '@/store/lesson/lesson.interface'
 
-const baseUrl = 'http://localhost:3000/api'
+const baseUrl = `${window.location.origin}/api`
 
 export const lessonService = {
 	getLesson: async (
