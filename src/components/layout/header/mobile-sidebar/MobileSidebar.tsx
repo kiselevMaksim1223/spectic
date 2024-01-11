@@ -15,6 +15,10 @@ const MobileSidebar: FC = () => {
 	const [isOpen, setIsOpen] = useState(false)
 	const isNotMobile = useMediaQuery('( min-width: 767px )')
 
+	const sidebarHandler = () => {
+		setIsOpen((prev) => !prev)
+	}
+
 	useEffect(() => {
 		if (!isNotMobile) {
 			setIsOpen(false)
@@ -23,10 +27,7 @@ const MobileSidebar: FC = () => {
 
 	return (
 		<div className="md:hidden">
-			<Button
-				className="md:hidden p-2"
-				onClick={() => setIsOpen((prev) => !prev)}
-			>
+			<Button className="md:hidden p-2" onClick={sidebarHandler}>
 				<MdDensityMedium size={24} />
 			</Button>
 			{isOpen && (
@@ -40,11 +41,11 @@ const MobileSidebar: FC = () => {
 				}
 			>
 				<MdClose
-					onClick={() => setIsOpen((prev) => !prev)}
+					onClick={sidebarHandler}
 					size={30}
 					className="absolute right-4 top-10 cursor-pointer"
 				/>
-				<div className="h-full pt-24 pb-8" onClick={() => setIsOpen(false)}>
+				<div className="h-full pt-24 pb-8" onClick={sidebarHandler}>
 					<Logo className="absolute left-4 top-9 cursor-pointer" />
 					<SidebarLinks />
 				</div>

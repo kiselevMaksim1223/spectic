@@ -1,6 +1,6 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 
-const AnswerCheck: FC<{ response: boolean }> = ({ response }) => {
+const AnswerCheck: FC<{ response: boolean }> = memo(({ response }) => {
 	return (
 		<p
 			className={`self-center text-lg ${
@@ -10,6 +10,8 @@ const AnswerCheck: FC<{ response: boolean }> = ({ response }) => {
 			{response ? 'Correct' : 'Incorrect'}
 		</p>
 	)
-}
+})
+
+AnswerCheck.displayName = 'AnswerCheck'
 
 export default AnswerCheck

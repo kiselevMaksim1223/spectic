@@ -1,32 +1,22 @@
-import { useState } from 'react'
+import { useAppDispatch } from '@/hooks/useAppDispatch'
 
-import { lessonService } from '@/services/lesson.service'
+import { setIsDisabled } from '@/store/lesson/lesson.slice'
+import { submitLessonAction } from '@/store/lesson/lesson.thunks'
 
-export const useSubmitLesson = (taskId: number) => {
-	const [response, setResponse] = useState<boolean | null>(null)
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [isDisabled, setIsDisabled] = useState<boolean>(true)
+export const useSubmitLesson = (lessonId: number) => {
+	const dispatch = useAppDispatch()
 
-	const submitLesson = async (value: string) => {
-		try {
-			setIsLoading(true)
-			const res = await lessonService.submitLesson(taskId, value)
-			setResponse(res.submissionResult)
-			setIsDisabled(true)
-		} catch (error) {
-			console.log(error)
-		} finally {
-			setIsLoading(false)
-		}
+	const submitLesson = (value: string) => {
+		dispatch(submitLessonAction({ lessonId, value }))
 	}
 
 	const handleChange = (value: string) => {
 		if (value) {
-			setIsDisabled(false)
+			dispatch(setIsDisabled(false))
 		} else {
-			setIsDisabled(true)
+			dispatch(setIsDisabled(true))
 		}
 	}
 
-	return { response, isLoading, submitLesson, handleChange, isDisabled }
+	return { submitLesson, handleChange }
 }

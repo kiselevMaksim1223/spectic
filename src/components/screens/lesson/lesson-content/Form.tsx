@@ -5,7 +5,12 @@ import { FC, FormEvent, useRef } from 'react'
 import Button from '@/components/ui/Button'
 import Loader from '@/components/ui/Loader'
 
-import { ILessonResponse } from '@/types/lesson.types'
+import { useAppDispatch } from '@/hooks/useAppDispatch'
+import { useAppSelector } from '@/hooks/useAppSelector'
+
+import { ILessonResponse } from '@/store/lesson/lesson.interface'
+import { lessonResultSelector } from '@/store/lesson/lesson.selector'
+import { setIsDisabled } from '@/store/lesson/lesson.slice'
 
 import AnswerCheck from './AnswerCheck'
 import LessonPagination from './LessonPagination'
@@ -13,22 +18,28 @@ import { useRedirectNextPage } from './useRedirectNextPage'
 import { useSubmitLesson } from './useSubmitLesson'
 
 const Form: FC<{ lesson: ILessonResponse }> = ({ lesson }) => {
-	console.log('form rendered')
+	const lessonResult = useAppSelector(lessonResultSelector)
+
+	const submittedResult = lessonResult.results[lesson.lessonId]
+	const isCompletedResult = lessonResult.isCompletedResults[lesson.lessonId]
+	const isLoading = lessonResult.isLoading
+	const isDisabled = lessonResult.isDisabled
 
 	const ref = useRef<HTMLTextAreaElement>(null)
 
-	const { response, isLoading, submitLesson, isDisabled, handleChange } =
-		useSubmitLesson(lesson.taskId)
+	const { submitLesson, handleChange } = useSubmitLesson(lesson.lessonId)
+
 	const redirectTime = useRedirectNextPage(
-		lesson.taskId,
+		lesson.lessonId,
 		lesson.count,
-		response
+		submittedResult,
+		isCompletedResult
 	)
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault()
 		if (ref.current) {
-			await submitLesson(ref.current.value)
+			submitLesson(ref.current.value)
 			ref.current.value = ''
 		}
 	}
@@ -48,21 +59,28 @@ const Form: FC<{ lesson: ILessonResponse }> = ({ lesson }) => {
 				<div className="flex gap-4">
 					<Button
 						type="submit"
-						disabled={isLoading || isDisabled}
+						disabled={isLoading || isDisabled || isCompletedResult}
 						className="btn-submit py-3 px-10 w-auto"
 					>
 						Submit
 					</Button>
 
 					{isLoading && <Loader className="self-center !w-6 !h-6" />}
-					{response !== null && <AnswerCheck response={response} />}
+					{typeof submittedResult === 'boolean' && (
+						<AnswerCheck response={submittedResult} />
+					)}
 				</div>
-				<LessonPagination lessonCount={lesson.count} lessonId={lesson.taskId} />
+				<LessonPagination
+					lessonCount={lesson.count}
+					lessonId={lesson.lessonId}
+				/>
 			</div>
 
 			<p
 				className={`text-xs md:text-sm mt-4 self-end ${
-					response !== null ? '' : 'opacity-0'
+					typeof submittedResult === 'boolean' && !isCompletedResult
+						? ''
+						: 'opacity-0'
 				}`}
 			>
 				You will be redirected to the next question in {redirectTime}
