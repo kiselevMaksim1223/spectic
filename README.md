@@ -9,9 +9,10 @@ The Spectic provides the following features:
 -Display a questions with opportunity to write the answer in the text field and submit form.
 -Pick the question what you want to answer first.
 
-## Deploy version
+## Video demonstration
 
-You can see the demo on
+file:///home/sweetie1223/snap/obs-studio/1294/2024-01-11%2013-35-05.mkv
+
 
 ## Local Setup
 
